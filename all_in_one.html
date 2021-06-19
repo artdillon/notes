@@ -1,0 +1,741 @@
+
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>操作系统安全基础</title>
+<meta name="author" content="贺新征" />
+<meta name="generator" content="Org Mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="src/readtheorg_theme/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="src/readtheorg_theme/css/readtheorg.css"/>
+<script type="text/javascript" src="src/lib/js/jquery.min.js"></script>
+<script type="text/javascript" src="src/lib/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="src/lib/js/jquery.stickytableheaders.min.js"></script>
+<script type="text/javascript" src="src/readtheorg_theme/js/readtheorg.js"></script>
+<style>pre.src{background:#343131;color:white;} </style>
+<script type="text/javascript">
+// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
+<!--/*--><![CDATA[/*><!--*/
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+    /*]]>*///-->
+// @license-end
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">操作系统安全基础</h1>
+
+<div id="outline-container-orgec1cdb8" class="outline-2">
+<h2 id="orgec1cdb8"><span class="section-number-2">1</span> 教学目的</h2>
+<div class="outline-text-2" id="text-1">
+<p class="verse">
+1. 了解实模式历史，知道保护模式意义<br />
+2. 内存布局结构<br />
+</p>
+</div>
+</div>
+
+<div id="outline-container-org72923bc" class="outline-2">
+<h2 id="org72923bc"><span class="section-number-2">2</span> 寻址方式和保护模式</h2>
+<div class="outline-text-2" id="text-2">
+<pre class="example">
+ 1. 16b:8086 &amp; 8088
+ 2. 16b:80286 *实模式 -&gt; 保护模式* ，虽然是 16 位 CPU，寻址方式变化了
+ 3. 32b:80386
+</pre>
+</div>
+
+<div id="outline-container-org8d68991" class="outline-3">
+<h3 id="org8d68991"><span class="section-number-3">2.1</span> 历史上的“保护模式”</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+<b>问题：</b> 16 位或 32 位 CPU 什么含义？
+</p>
+
+<p>
+指的是“数据总线”的宽度，即 ALU 算数逻辑运算单元取数据的能力。那么，自然而然，&ldquo;
+地址总线&rdquo;与 &ldquo;数据总线&rdquo; 宽度应该是一样的。也就是，到一个地址读取一个数据时，一次性就能读这么多。
+</p>
+
+<p>
+这就是硬盘空间大（地址空间大），但计算能力差（数据总线读数据到 ALU）时代的特殊产物。例如，CPU 计算能力只能是 8 位，但硬盘发展技术快可以多存数据，为了不浪费内存空间大小，出现 8 位 CPU 配 16 位寻址空间。
+</p>
+
+<p>
+<b>问题:</b> 16 位寻址有多大地址空间？
+</p>
+
+<p>
+Intel 决定 8086 的设计：16 位 CPU，但采用 20 位地址总线。如何弥补之间差距？
+</p>
+</div>
+</div>
+
+<div id="outline-container-org951a93b" class="outline-3">
+<h3 id="org951a93b"><span class="section-number-3">2.2</span> 用 16 位 CPU 寄存器拼接出 20 位地址，再读硬盘数据</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+从 16 位内部地址到 20 位真实地址的转换方法。以下方法与操作系统课程中“段式内存管理”非常类似，但缺少的是 <b>地址空间保护机制</b> 。
+</p>
+
+<pre class="example">
+1. 配置 4 个段寄存器 CS、DS、SS、ES，对应高 16 位
+2. 访内指令地址都是 16 位，对应低 16 位
+3. 送上地址总线前与某个段寄存器相加，形成真实硬盘地址
+</pre>
+
+<p>
+<b>问题:</b> 段式管理的方式是什么？
+</p>
+</div>
+</div>
+
+<div id="outline-container-orga3f20d2" class="outline-3">
+<h3 id="orga3f20d2"><span class="section-number-3">2.3</span> 缺少内存保护机制引发的问题</h3>
+<div class="outline-text-3" id="text-2-3">
+<pre class="example">
+1. 进程的 “基地址” 由段寄存器决定，所以总能访问由此处开始连续的 64k 空间。
+2. 段寄存器也无访问权限限制，可任意修改，意味着进程能访问所有地址空间。
+3. 如果无法限制进程访问地址空间，就谈不上内存保护机制和操作系统的安全。
+</pre>
+
+<p>
+为了将 8086 与其后建立起现代内存访问机制的操作系统相互区别，前者称为 <b>实模式</b>
+，后者称为 <b>保护模式</b> 。
+</p>
+
+<p>
+80286 尝试实现了保护模式，但不完整；80386 完全实现了保护模式，此后系统架构都没有什么大的改动，称为 i386 系列。（具体内容略去）
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgaec12c9" class="outline-2">
+<h2 id="orgaec12c9"><span class="section-number-2">3</span> 虚地址到实地址之间转换</h2>
+<div class="outline-text-2" id="text-3">
+<pre class="example" id="org5112c5d">
+1. 获得CR3内容，得到PDTB地址
+2. 取virtual address的高10bit作为index，在PD中查找相应的PDE.
+3. 根据PDE中的页表基地址（即PDE的高20bit）定位到Page Table(页表)
+4. 取virtual address中第10-21bit作为索引，选取页表中的一个PTE（页表项）
+5. 取PTE中的内存页表基地址（高20bit）+ virtual address中的低12位offset
+   即可以得到实际的physical address 了。
+</pre>
+</div>
+
+<div id="outline-container-orgbdb704a" class="outline-3">
+<h3 id="orgbdb704a"><span class="section-number-3">3.1</span> CR3</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+CR3 存储 PDT 的基地址，也称为 PDTB。CR3 存储的是第一个 PDT 的基地址。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb1d7bd1" class="outline-3">
+<h3 id="orgb1d7bd1"><span class="section-number-3">3.2</span> Page Directory Table</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+PDT 是个表，每个 Entry 称为 PDE。每个 PDT 占用内存 4K，每个 PDE 是 32Bit，所以每个 PDT 最多包含 1024 个 PDE。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org2d170d0" class="outline-3">
+<h3 id="org2d170d0"><span class="section-number-3">3.3</span> Page Table</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+Page Table 是用来存在页表项(Page Table Entry, PTE)的线性表。同样，每个 PT 占用一个内存页，每个 PTE 的长度为 32bit, 故每个 PT 中最多可以包含 1024 个 PTE
+</p>
+
+
+<div id="org9543da5" class="figure">
+<p><img src="figures/viradd.jpeg" alt="viradd.jpeg" />
+</p>
+</div>
+
+
+<div id="org0cadab4" class="figure">
+<p><img src="figures/transfer.jpeg" alt="transfer.jpeg" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9a90729" class="outline-3">
+<h3 id="org9a90729"><span class="section-number-3">3.4</span> Windbg 展示地址转换过程</h3>
+<div class="outline-text-3" id="text-3-4">
+</div>
+<div id="outline-container-org0351e3d" class="outline-4">
+<h4 id="org0351e3d">打开 calc.exe,输入数字，如 123456， 然后在 user mode 下开始调试 calc.exe</h4>
+<div class="outline-text-4" id="text-org0351e3d">
+<pre class="example">
+0:002&gt; x calc!g*
+01014f08 calc!ghwndTimeOutDlg = &lt;no type information&gt;
+01014d9c calc!g_fHighContrast = &lt;no type information&gt;
+.......
+01014db0 calc!gpszNum = &lt;no type information&gt; &lt;------
+.......
+01014f0c calc!gnPendingError = &lt;no type information&gt;
+</pre>
+</div>
+</div>
+<div id="outline-container-orgaed6d1c" class="outline-4">
+<h4 id="orgaed6d1c">看 000b2ee0 附近 连续内存空间里面的内容：</h4>
+<div class="outline-text-4" id="text-orgaed6d1c">
+<pre class="example">
+0:002&gt; dd 01014db0
+01014db0  000b2ee0 00000000 00000001 00000000
+01014dc0  00000000 ffffffff 00000000 00000000
+01014dd0  00000006 00320031 00340033 00360035
+01014de0  00000000 00000000 00000000 00000000
+01014df0  00000000 00000000 00000000 00000000
+</pre>
+
+<pre class="example">
+0:002&gt; dd 000b2ee0
+000b2ee0  00320031 00340033 00360035 0000002e
+000b2ef0  00030025 0008013d 000b3060 000b2f14
+000b2f00  00000000 00000000 00000000 00000000
+000b2f10  00000000 5443534d 614d2e46 61687372
+000b2f20  746e496c 61667265 462e6563 4d656c69
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org20e92d7" class="outline-4">
+<h4 id="org20e92d7">输入字符串变量的地址就在 000b2ee0 内存里面</h4>
+<div class="outline-text-4" id="text-org20e92d7">
+<pre class="example">
+0:002&gt; du 000b2ee0
+000b2ee0  "123456."
+</pre>
+
+<p>
+该地址 000b2ee0 里面存放的正是我们所输入的数字：123456。而 000b2ee0 为 virtual
+address。那么其 physical address 到底是什么呢？根据前面的介绍，一个 32bit 的
+virtual address 由 3 部分组成。
+</p>
+
+<pre class="example">
+0:002&gt; .formats 000b2ee0
+Evaluate expression:
+  Hex:     000b2ee0
+  Decimal: 732896
+  Octal:   00002627340
+  Binary:  [00000000 00][001011 0010][1110 11100000]
+  Chars:   ....
+  Time:    Fri Jan 09 03:34:56 1970
+  Float:   low 1.02701e-039 high 0
+  Double:  3.62099e-318#+END_SRC
+</pre>
+
+<p>
+由以上可以看出，其 PDE index 为高 10 ：0， PTE index（中间 10bit): B2, 页内偏移地址：EE0
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge49f4d9" class="outline-2">
+<h2 id="orge49f4d9"><span class="section-number-2">4</span> WinDbg 快速介绍</h2>
+<div class="outline-text-2" id="text-4">
+</div>
+<div id="outline-container-orgbfa34cb" class="outline-3">
+<h3 id="orgbfa34cb"><span class="section-number-3">4.1</span> notepad</h3>
+<div class="outline-text-3" id="text-4-1">
+<ul class="org-ul">
+<li>调用模块</li>
+<li>内存地址</li>
+</ul>
+
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 1:</span> PSEUDO Register</caption>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">命令</th>
+<th scope="col" class="org-left">解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">$scopeip</td>
+<td class="org-left">The instruction pointer for the current local context (also known as the scope).</td>
+</tr>
+
+<tr>
+<td class="org-left">$exentry</td>
+<td class="org-left">The address of the entry point of the first executable of the current process.</td>
+</tr>
+
+<tr>
+<td class="org-left">$proc</td>
+<td class="org-left">The address of the current process (that is, the address of the EPROCESS block).</td>
+</tr>
+</tbody>
+</table>
+
+<ul class="org-ul">
+<li>寄存器(register)</li>
+<li>反汇编(disassembly)</li>
+<li><p>
+symchk
+</p>
+<pre class="example">
+# 运行下面命令下载 windows 所有的符号文件
+"C:\Program Files (x86)\Windows Kits\10\Debuggers\x86\symchk.exe" /r c:\windows /s SRV*c:\symbols\*http://msdl.microsoft.com/download/symbols
+# 查找指定dll的符号文件
+"C:\Program Files (x86)\Windows Kits\10\Debuggers\x86\symchk.exe" "c:\windows\system32\kernel32.dll" /s SRV*c:\symbols\*http://msdl.microsoft.com/download/symbols
+</pre></li>
+<li><p>
+添加符号路径
+</p>
+<pre class="example">
+.sympath SRV*c:\symbols\*http://msdl.microsoft.com/download/symbols
+.reload /f
+</pre></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgc6966f9" class="outline-3">
+<h3 id="orgc6966f9"><span class="section-number-3">4.2</span> 命令</h3>
+<div class="outline-text-3" id="text-4-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 2:</span> Windbg 基本命令</caption>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">命令</th>
+<th scope="col" class="org-left">解释</th>
+<th scope="col" class="org-left">示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">bp</td>
+<td class="org-left">某个地址下断点</td>
+<td class="org-left"><code>bp @exentry</code></td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><code>bp 0x88888888</code></td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><code>bp MyApp!Func</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">g</td>
+<td class="org-left">继续执行</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">bu</td>
+<td class="org-left">针对某个符号下断点</td>
+<td class="org-left">模块加载前打断点</td>
+</tr>
+
+<tr>
+<td class="org-left">bm</td>
+<td class="org-left">支持正则表达式断点</td>
+<td class="org-left"><code>bm *!draw*</code></td>
+</tr>
+
+<tr>
+<td class="org-left">bl</td>
+<td class="org-left">列出所有断点</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">bc</td>
+<td class="org-left">清除断点</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">ba</td>
+<td class="org-left">指定内存被访问触发断点</td>
+<td class="org-left">ba Access Size [地址]</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">Access: e (执行)， r (读/写)， w (写)</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><code>ba w4 0x0483DFE</code></td>
+</tr>
+
+<tr>
+<td class="org-left">!address</td>
+<td class="org-left">目标进程内存使用</td>
+<td class="org-left"><code>!address Address</code></td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">将堆栈地址分开</td>
+<td class="org-left"><code>!address -summary</code></td>
+</tr>
+
+<tr>
+<td class="org-left">!dh</td>
+<td class="org-left">扩展显示指定映像的头部</td>
+<td class="org-left"><code>!dh -h</code></td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><code>!dh -f notepad</code></td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><code>!dh ntdll</code></td>
+</tr>
+
+<tr>
+<td class="org-left">!lmi</td>
+<td class="org-left">某个模块的详细信息</td>
+<td class="org-left"><code>!lmi ntdll</code></td>
+</tr>
+
+<tr>
+<td class="org-left">lm</td>
+<td class="org-left">模块及模块的符号加载</td>
+<td class="org-left"><code>lm</code></td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><code>lm vm test.dll</code></td>
+</tr>
+
+<tr>
+<td class="org-left">x</td>
+<td class="org-left">检查符号</td>
+<td class="org-left"><code>x kernel32!Virtual*</code></td>
+</tr>
+
+<tr>
+<td class="org-left">k</td>
+<td class="org-left">查看线程调用栈</td>
+<td class="org-left"><code>k</code></td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">显示每个函数的前三个参数</td>
+<td class="org-left"><code>kb</code></td>
+</tr>
+
+<tr>
+<td class="org-left">db</td>
+<td class="org-left">显示存储在某地址中的数据</td>
+<td class="org-left"><code>db notepad</code></td>
+</tr>
+
+<tr>
+<td class="org-left">dd</td>
+<td class="org-left">同上，双字节显示</td>
+<td class="org-left"><code>db notepad L100</code></td>
+</tr>
+
+<tr>
+<td class="org-left">dt</td>
+<td class="org-left">显示结构信息</td>
+<td class="org-left"><code>dt _PEB</code></td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">PE 的结构</td>
+<td class="org-left"><code>dt -r ntdll!_IMAGE_NT_HEADERS 00fd00f8</code></td>
+</tr>
+
+<tr>
+<td class="org-left">dx</td>
+<td class="org-left">C++指针计算</td>
+<td class="org-left"><code>dx -r1 (*((ntdll!_IMAGE_OPTIONAL_HEADER *) 0xfd0110))</code></td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><code>dx -r2 (*((ntdll!_IMAGE_DATA_DIRECTORY (*)[16]) 0xfd0170))</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgdd29b4b" class="outline-2">
+<h2 id="orgdd29b4b"><span class="section-number-2">5</span> 函数调用堆栈</h2>
+<div class="outline-text-2" id="text-5">
+</div>
+<div id="outline-container-org51a4bbf" class="outline-3">
+<h3 id="org51a4bbf"><span class="section-number-3">5.1</span> PE</h3>
+<div class="outline-text-3" id="text-5-1">
+<ul class="org-ul">
+<li>入口地址</li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-org6b312c1" class="outline-3">
+<h3 id="org6b312c1">参考文献</h3>
+<div class="outline-text-3" id="text-org6b312c1">
+<p>
+[1] 《Linux 内核源代码情景分析》，毛德操，2010 年，P6-P7
+</p>
+
+<p>
+[2] 《软件调试》，张银奎，2012
+</p>
+
+<p>
+[3] [软件调试学习笔记]WinDbg 演示 IA-32 CPU 下的 Windows 分页机制下的地址转换过程
+</p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>
